@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- Viewport Tag for Mobile & Tablet Responsiveness -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>LensCraft | Photographer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ================= GLOBAL STYLES ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background: #080808;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================= PAGE SWITCHING LOGIC ================= */
+.page-section {
+    display: none;
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    margin-top: 80px;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.page-section.active {
+    display: block;
+}
+
+#home.page-section.active {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= NAVBAR ================= */
+nav {
+    width: 100%;
+    height: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: #080808;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 50px;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.logo {
+    color: white;
+    text-decoration: none;
+    font-family: cursive;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.nav-links {
+    display: flex;
+    gap: 45px;
+    list-style: none;
+}
+
+.nav-links a {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+}
+
+.menu-btn {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+/* ================= HOME SECTION ================= */
+.home {
+    background: #080808;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hero {
+    width: 100%;
+    max-width: 1250px;
+    margin: auto;
+    padding: 60px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 70px;
+}
+
+.hero-image-box {
+    width: 50%;
+    height: 520px;
+    border: 2px solid white;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-image {
+    width: 92%;
+    height: 92%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(100%);
+}
+
+.photographer-text {
+    position: absolute;
+    left: 35px;
+    bottom: -32px;
+    font-size: 14px;
+    letter-spacing: 10px;
+    background: #080808;
+    padding: 0 10px;
+}
+
+.hero-content {
+    width: 50%;
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-size: clamp(38px, 5vw, 65px);
+    font-weight: 400;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+}
+
+.hero-content p {
+    font-size: 20px;
+    line-height: 1.6;
+    font-weight: 300;
+    margin-bottom: 40px;
+    color: #ccc;
+}
+
+.portfolio-btn {
+    display: inline-block;
+    padding: 15px 32px;
+    border: 1px solid white;
+    color: white;
+    text-decoration: none;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.portfolio-btn:hover {
+    background: white;
+    color: black;
+}
+
+/* ================= ABOUT SECTION ================= */
+.about {
+    background: #1c1c1c;
+    padding: 80px 60px;
+    color: #ffffff;
+}
+
+.about-container {
+    max-width: 1250px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.about-left-img-box {
+    position: relative;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+}
+
+.about-left-img-box img {
+    width: 100%;
+    max-width: 240px;
+    height: 380px;
+    object-fit: cover;
+    display: block;
+    position: relative;
+    z-index: 2;
+    filter: grayscale(100%);
+}
+
+.about-left-img-box::after {
+    content: "";
+    position: absolute;
+    width: 90%;
+    height: 105%;
+    border: 1px solid #777;
+    top: -15px;
+    left: 20px;
+    z-index: 1;
+}
+
+.about-middle-content {
+    width: 40%;
+}
+
+.about-middle-content h2 {
+    font-size: 26px;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.about-middle-content p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #cccccc;
+    font-weight: 300;
+}
+
+.about-right-img-box {
+    position: relative;
+    width: 32%;
+    display: flex;
+    justify-content: center;
+}
+
+.about-right-img-box img {
+    width: 100%;
+    max-width: 310px;
+    height: 370px;
+    object-fit: cover;
+    position: relative;
+    z-index: 3;
+    display: block;
+}
+
+.about-right-img-box::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    max-width: 310px;
+    height: 370px;
+    background: #e0e0e0;
+    top: -30px;
+    left: -20px;
+    z-index: 1;
+}
+
+.about-right-img-box::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    max-width: 310px;
+    height: 370px;
+    background: #888888;
+    bottom: -30px;
+    right: -20px;
+    z-index: 2;
+}
+
+.about-bottom-text {
+    max-width: 1250px;
+    margin: 60px auto 0;
+    font-size: 17px;
+    line-height: 1.8;
+    color: #cccccc;
+    font-weight: 300;
+}
+
+/* ================= PORTFOLIO SECTION ================= */
+.portfolio {
+    background: #080808;
+    padding: 80px 60px;
+}
+
+.portfolio-header {
+    text-align: center;
+    max-width: 1250px;
+    margin: 0 auto 40px;
+}
+
+.portfolio-header h2 {
+    font-size: 38px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.portfolio-filters {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    list-style: none;
+    margin-top: 15px;
+}
+
+.portfolio-filters li {
+    font-size: 16px;
+    color: #888;
+    cursor: pointer;
+    transition: 0.3s;
+    padding-bottom: 5px;
+}
+
+.portfolio-filters li:hover,
+.portfolio-filters li.active {
+    color: #ffffff;
+    border-bottom: 2px solid #ffffff;
+}
+
+.portfolio-grid {
+    max-width: 1250px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.portfolio-item {
+    position: relative;
+    height: 380px;
+    overflow: hidden;
+    border: 1px solid #222;
+    transition: 0.3s ease;
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.portfolio-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.portfolio-overlay h4 {
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.portfolio-overlay p {
+    font-size: 14px;
+    color: #aaa;
+}
+
+.portfolio-item:hover img {
+    transform: scale(1.08);
+}
+
+.portfolio-item:hover .portfolio-overlay {
+    opacity: 1;
+}
+
+/* ================= PRICING SECTION ================= */
+.pricing {
+    background: #141414;
+    padding: 80px 60px;
+}
+
+.pricing-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.pricing-header h2 {
+    font-size: 38px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.pricing-header p {
+    color: #aaa;
+    font-size: 17px;
+}
+
+.pricing-grid {
+    max-width: 1250px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px;
+}
+
+.pricing-card {
+    background: #1c1c1c;
+    border: 1px solid #333;
+    padding: 25px;
+    text-align: center;
+    position: relative;
+    transition: 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.pricing-card:hover {
+    border-color: #fff;
+    transform: translateY(-8px);
+}
+
+.pricing-card.featured {
+    border: 2px solid #fff;
+    background: #222;
+}
+
+.pricing-card-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 1px solid #333;
+}
+
+.badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    color: black;
+    padding: 4px 15px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    z-index: 10;
+}
+
+.pricing-card h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.price span {
+    font-size: 14px;
+    color: #aaa;
+    font-weight: 300;
+}
+
+.pricing-features {
+    list-style: none;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.pricing-features li {
+    font-size: 15px;
+    color: #ccc;
+    margin-bottom: 12px;
+}
+
+.price-btn {
+    display: inline-block;
+    width: 100%;
+    padding: 14px 0;
+    border: 1px solid white;
+    color: white;
+    text-decoration: none;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.price-btn:hover {
+    background: white;
+    color: black;
+}
+
+/* ================= CONTACT SECTION ================= */
+.contact {
+    background: #080808;
+    padding: 80px 60px;
+}
+
+.contact-container {
+    max-width: 1250px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+}
+
+.contact-info {
+    width: 45%;
+}
+
+.contact-info h2 {
+    font-size: 38px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.contact-info p {
+    font-size: 17px;
+    color: #aaa;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.info-item {
+    margin-bottom: 25px;
+}
+
+.info-item h4 {
+    font-size: 15px;
+    color: #666;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.info-item p {
+    font-size: 19px;
+    color: #fff;
+}
+
+.contact-form {
+    width: 50%;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #444;
+    padding: 15px 0;
+    color: white;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-bottom-color: white;
+}
+
+.submit-btn {
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 15px 40px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 15px;
+}
+
+.submit-btn:hover {
+    background: white;
+    color: black;
+}
+
+/* ================= FOOTER ================= */
+footer {
+    background: #000;
+    text-align: center;
+    padding: 25px;
+    border-top: 1px solid #222;
+    color: #666;
+    font-size: 14px;
+    margin-top: auto;
+}
+
+/* ================= RESPONSIVE MEDIA QUERIES (@media) ================= */
+@media(max-width: 900px) {
+    nav { padding: 0 25px; }
+    .nav-links { gap: 25px; }
+    
+    .hero {
+        flex-direction: column;
+        padding: 40px 20px;
+    }
+    .hero-image-box { width: 85%; height: 450px; }
+    .hero-content { width: 100%; }
+
+    .about-container {
+        flex-direction: column;
+        gap: 60px;
+    }
+    .about-left-img-box,
+    .about-middle-content,
+    .about-right-img-box {
+        width: 100%;
+    }
+    .about-middle-content { text-align: center; }
+
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-container {
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    .contact-info,
+    .contact-form {
+        width: 100%;
+    }
+}
+
+@media(max-width: 600px) {
+    nav { height: 70px; padding: 0 20px; }
+    .logo { font-size: 22px; }
+    .menu-btn { display: block; }
+    
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: #080808;
+        flex-direction: column;
+        align-items: center;
+        padding: 25px 0;
+        gap: 20px;
+        border-bottom: 1px solid #222;
+    }
+    .nav-links.show { display: flex; }
+
+    .hero-image-box { width: 100%; height: 380px; }
+    .hero-content h1 { font-size: 34px; }
+    .hero-content p { font-size: 16px; }
+    .photographer-text { font-size: 10px; letter-spacing: 6px; left: 15px; }
+
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .portfolio-filters {
+        gap: 15px;
+        font-size: 14px;
+    }
+
+    .about, .portfolio, .pricing, .contact {
+        padding: 60px 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav>
+    <div class="logo" onclick="showPage('home')">LensCraft</div>
+    <ul class="nav-links" id="navLinks">
+        <li><a id="nav-home" class="active" onclick="showPage('home')">Home</a></li>
+        <li><a id="nav-about" onclick="showPage('about')">About Me</a></li>
+        <li><a id="nav-portfolio" onclick="showPage('portfolio')">Portfolio</a></li>
+        <li><a id="nav-pricing" onclick="showPage('pricing')">Pricing</a></li>
+        <li><a id="nav-contact" onclick="showPage('contact')">Contact</a></li>
+    </ul>
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+</nav>
+
+<!-- ================= HOME PAGE ================= -->
+<section class="page-section home active" id="home">
+    <div class="hero">
+        <div class="hero-image-box">
+            <img class="hero-image" src="images/Frame 3300.jpg" alt="Milo Edwards">
+            <div class="photographer-text">P H O T O G R A P H E R</div>
+        </div>
+        
+        <div class="hero-content">
+            <h1>Milo Edwards</h1>
+            <p>Capturing raw emotions, timeless moments, and stories behind every frame.</p>
+            <a onclick="showPage('portfolio')" class="portfolio-btn">View Portfolio</a>
+        </div>
+    </div>
+</section>
+
+<!-- ================= ABOUT PAGE ================= -->
+<section class="page-section about" id="about">
+    <div class="about-container">
+        <div class="about-left-img-box">
+            <img src="images/Frame 3300.jpg" alt="About Left Image">
+        </div>
+
+        <div class="about-middle-content">
+            <h2>ABOUT ME</h2>
+            <p>
+                Lorem ipsum dolor sit amet. Amet mil mi, arcus leo vitae placerat tristique. 
+                Rhoncus diam, posuere bibendum nunc ultricies mi eget. Integer interdum semper 
+                massa non convallis eu sed senectus scelerisque dignissim ornare. Etiam pharetra 
+                enim lectus urna quis eget phasellus pharetra egestas suspendisse.
+            </p>
+        </div>
+
+        <div class="about-right-img-box">
+            <img src="images/Rectangle 307.jpg" alt="About Right Image">
+        </div>
+    </div>
+
+    <div class="about-bottom-text">
+        <p>
+            Nunc sed sit ut, mi leo libero pharetra rhoncus. Suspendisse venenatis imperdiet 
+            vulputate at, mi rhoncus diam. Pellentesque sem natoque metus feugiat fermentum 
+            amet phasellus vitae proin aliquet ac eu pretium egestas sed. Consectetur adipiscing elit.
+        </p>
+    </div>
+</section>
+
+<!-- ================= PORTFOLIO PAGE ================= -->
+<section class="page-section portfolio" id="portfolio">
+    <div class="portfolio-header">
+        <h2>PORTFOLIO</h2>
+        <ul class="portfolio-filters">
+            <li class="active" onclick="filterPortfolio('all', this)">All</li>
+            <li onclick="filterPortfolio('portraits', this)">Portraits</li>
+            <li onclick="filterPortfolio('weddings', this)">Weddings</li>
+            <li onclick="filterPortfolio('editorial', this)">Editorial</li>
+        </ul>
+    </div>
+
+    <div class="portfolio-grid">
+        <div class="portfolio-item" data-category="weddings">
+            <img src="images/Frame 3307 (1).jpg" alt="Portfolio 1">
+            <div class="portfolio-overlay">
+                <h4>Bridal Story</h4>
+                <p>Wedding Photography</p>
+            </div>
+        </div>
+
+        <div class="portfolio-item" data-category="portraits">
+            <img src="images/Frame 3307 (2).jpg" alt="Portfolio 2">
+            <div class="portfolio-overlay">
+                <h4>Urban Moods</h4>
+                <p>Portrait Photography</p>
+            </div>
+        </div>
+
+        <div class="portfolio-item" data-category="portraits">
+            <img src="images/Frame 3307 (3).jpg" alt="Portfolio 3">
+            <div class="portfolio-overlay">
+                <h4>Golden Hour</h4>
+                <p>Outdoor Session</p>
+            </div>
+        </div>
+
+        <div class="portfolio-item" data-category="editorial">
+            <img src="images/Frame 3307 (4).jpg" alt="Portfolio 4">
+            <div class="portfolio-overlay">
+                <h4>Monochrome Life</h4>
+                <p>Editorial Work</p>
+            </div>
+        </div>
+
+        <div class="portfolio-item" data-category="weddings">
+            <img src="images/Frame 3307 (5).jpg" alt="Portfolio 5">
+            <div class="portfolio-overlay">
+                <h4>Candid Moments</h4>
+                <p>Wedding Shoot</p>
+            </div>
+        </div>
+
+        <div class="portfolio-item" data-category="editorial">
+            <img src="images/Frame 3307 (6).jpg" alt="Portfolio 6">
+            <div class="portfolio-overlay">
+                <h4>Vogue Concept</h4>
+                <p>Fashion Shoot</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= PRICING PAGE ================= -->
+<section class="page-section pricing" id="pricing">
+    <div class="pricing-header">
+        <h2>PRICING PACKAGES</h2>
+        <p>Choose the perfect package for your upcoming shoot</p>
+    </div>
+
+    <div class="pricing-grid">
+        <!-- Package 1 -->
+        <div class="pricing-card">
+            <img class="pricing-card-img" src="images/Frame 3308 (1).jpg" alt="Portrait Shoot">
+            <h3>Portrait Package</h3>
+            <div class="price">$250 <span>/ Session</span></div>
+            <ul class="pricing-features">
+                <li>2 Hours Shoot Time</li>
+                <li>15 Retouched High-Res Photos</li>
+                <li>Single Location</li>
+                <li>Online Gallery Access</li>
+            </ul>
+            <a onclick="showPage('contact')" class="price-btn">Book Package</a>
+        </div>
+
+        <!-- Package 2 (Featured) -->
+        <div class="pricing-card featured">
+            <div class="badge">Most Popular</div>
+            <img class="pricing-card-img" src="images/Frame 3308 (2).jpg" alt="Wedding Shoot">
+            <h3>Wedding Package</h3>
+            <div class="price">$1,200 <span>/ Event</span></div>
+            <ul class="pricing-features">
+                <li>Full Day Coverage</li>
+                <li>150+ Edited Photos</li>
+                <li>2 Photographers Team</li>
+                <li>Printed Premium Album</li>
+            </ul>
+            <a onclick="showPage('contact')" class="price-btn">Book Package</a>
+        </div>
+
+        <!-- Package 3 -->
+        <div class="pricing-card">
+            <img class="pricing-card-img" src="images/Frame 3308 (3).jpg" alt="Editorial Shoot">
+            <h3>Editorial Package</h3>
+            <div class="price">$650 <span>/ Shoot</span></div>
+            <ul class="pricing-features">
+                <li>4 Hours Shoot Time</li>
+                <li>40 Commercial Edits</li>
+                <li>Studio & Outdoor Mix</li>
+                <li>Full Digital Usage Rights</li>
+            </ul>
+            <a onclick="showPage('contact')" class="price-btn">Book Package</a>
+        </div>
+    </div>
+</section>
+
+<!-- ================= CONTACT PAGE ================= -->
+<section class="page-section contact" id="contact">
+    <div class="contact-container">
+        <div class="contact-info">
+            <h2>GET IN TOUCH</h2>
+            <p>Have a project in mind or want to book a session? Send me a message and let's create something beautiful together.</p>
+            
+            <div class="info-item">
+                <h4>Email</h4>
+                <p>kannanlotus158@gmail.com</p>
+            </div>
+            
+            <div class="info-item">
+                <h4>Phone</h4>
+                <p>+1 (555) 234-5678</p>
+            </div>
+            
+            <div class="info-item">
+                <h4>Location</h4>
+                <p>New York City, NY</p>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <form action="#" onsubmit="event.preventDefault(); alert('Message sent successfully!');">
+                <div class="form-group">
+                    <input type="text" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Subject">
+                </div>
+                <div class="form-group">
+                    <textarea rows="4" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">SEND MESSAGE</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+    <p>&copy; 2026 LensCraft Photography by Milo Edwards. All Rights Reserved.</p>
+</footer>
+
+<!-- JavaScript Logic -->
+<script>
+// Page switching logic
+function showPage(pageId) {
+    const sections = document.querySelectorAll('.page-section');
+    sections.forEach(sec => sec.classList.remove('active'));
+
+    const targetSection = document.getElementById(pageId);
+    if (targetSection) {
+        targetSection.classList.add('active');
+    }
+
+    const links = document.querySelectorAll('.nav-links a');
+    links.forEach(link => link.classList.remove('active'));
+
+    const activeNav = document.getElementById('nav-' + pageId);
+    if (activeNav) {
+        activeNav.classList.add('active');
+    }
+
+    const navLinks = document.getElementById("navLinks");
+    navLinks.classList.remove("show");
+
+    window.scrollTo(0, 0);
+}
+
+// Mobile Menu Toggle
+function toggleMenu() {
+    const navLinks = document.getElementById("navLinks");
+    navLinks.classList.toggle("show");
+}
+
+// Portfolio Filtering Logic
+function filterPortfolio(category, element) {
+    const items = document.querySelectorAll('.portfolio-item');
+    
+    items.forEach(item => {
+        const itemCat = item.getAttribute('data-category');
+        if (category === 'all' || itemCat === category) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+
+    const filterTabs = document.querySelectorAll('.portfolio-filters li');
+    filterTabs.forEach(tab => tab.classList.remove('active'));
+    element.classList.add('active');
+}
+</script>
+
+</body>
+</html>
